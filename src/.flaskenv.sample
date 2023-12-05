@@ -1,0 +1,4 @@
+FLASK_RUN_PORT= # Flask server port
+FLASK_DEBUG= # Set debug to TRUE
+JWT_SECRET_KEY= # Set the JWT secret key
+SQLALCHEMY_DATABASE_URI= # Set data base connection string
