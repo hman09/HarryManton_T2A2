@@ -7,8 +7,8 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    email = db.Column(db.String)
-    username = db.Column(db.String)
+    email = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), nullable=False)
 
 # Use above for marshmallow
 class UserSchema(ma.Schema):

@@ -1,6 +1,8 @@
 # Import blueprint and db for first create and seed
 from flask import Blueprint
-from setup import db, ma
+from setup import db
+# thought the ma above would import the Schema but need the user model
+from models.user import User
 
 # Define Blueprint
 db_initialise = Blueprint('db', __name__)
@@ -20,18 +22,22 @@ def seed():
     # Make 3 users just need username and email for now
     users = [
         User(
-            username='user1',
-            email='user1@test.com'
+            username='Dave',
+            email='dave@test.com'
         ),
         User(
-            username='user2',
-            email='user2@test.com'
+            username='Gary',
+            email='garr@test.com'
         ),
         User(
-            username='user3',
-            email='user3@test.com'
-
+            username='Roy',
+            email='roy@test.com'
         )
     ]
+    # Commit session to db, print Seed successful
+    db.session.add_all(users)
+    db.session.commit()
+    print('Seed successful')
+    
 
 
