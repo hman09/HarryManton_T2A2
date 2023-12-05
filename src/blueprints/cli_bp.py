@@ -38,6 +38,7 @@ def seed():
     db.session.add_all(users)
     db.session.commit()
     print('Seed successful')
-    
+    # Error (psycopg2.errors.InsufficientPrivilege) permission denied for schema public
+    # Fixed by entering the following into psql : grant create on schema public to owner;
 
 
