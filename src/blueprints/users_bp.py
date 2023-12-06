@@ -3,11 +3,12 @@ from flask import Blueprint, request, redirect
 from setup import db
 from models.user import User, UserSchema
 from flask_jwt_extended import create_access_token, jwt_required
+from blueprints.logs_bp import logs_bp
 
 # Define Blueprint and config in app
 users_bp = Blueprint('/', __name__) # no url prefix becuase users will be my head page
 
-# When user can sign in with POST, API will check if user is in db if not will prompt them to /sign up
+users_bp.register_blueprint(logs_bp)
 
 # Home route
 @users_bp.route('/', methods=['POST'])
