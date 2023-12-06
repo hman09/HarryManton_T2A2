@@ -9,7 +9,7 @@ class Log(db.Model):
 
     title = db.Column(db.String(50), default='Mystery Dough')
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
 class LogSchema(ma.Schema):

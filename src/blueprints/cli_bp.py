@@ -3,6 +3,7 @@ from flask import Blueprint
 from setup import db
 # thought the ma above would import the Schema but need the user model
 from models.user import User
+from models.log import Log
 
 # Define Blueprint
 db_initialise = Blueprint('db', __name__)
@@ -34,11 +35,39 @@ def seed():
             email='roy@test.com'
         )
     ]
-    # Commit session to db, print Seed successful
     db.session.add_all(users)
     db.session.commit()
+
+    # Seeding 6 Logs 2 for each user
+    logs = [
+        Log(
+            title="Wholemeal",
+            user_id = users[0].id
+        ),
+        Log(
+            title="White",
+            user_id = users[0].id  
+        ),
+        Log(
+            title="Baguette",
+            user_id = users[1].id
+        ),
+        Log(
+            title="Sourdough",
+            user_id = users[1].id
+        ),
+        Log(
+            title="Pizza",
+            user_id = users[2].id
+        ),
+        Log(
+            title="Brioche",
+            user_id = users[2].id
+        )
+    ]
+    db.session.add_all(logs)
+    db.session.commit()
+
     print('Seed successful')
-    # Error (psycopg2.errors.InsufficientPrivilege) permission denied for schema public
-    # Fixed by entering the following into psql : grant create on schema public to owner;
 
 
