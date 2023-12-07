@@ -35,3 +35,47 @@ def single_user(user_id):
     
     else:
         return {'error' : 'User not found'}, 404
+
+#CRUD
+
+# Create log
+@logs_bp.route('/', methods=['POST']) 
+@jwt_required()
+def create_log():
+    log_info = LogSchema(exclude=['id']).load(request.json)
+    log = Log(
+        title = log_info['title'],
+        user_id = get_jwt_identity()
+    )
+    db.session.add(log)
+    db.session.commit()
+    return LogSchema().dump(log), 201
+
+# Read already done above
+
+# Update log
+@logs_bp.route('/edit/<int:id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_log(id):
+    log_info = LogSchema(exclude=['id']).load(request.json)
+    stmt = db.select(Log).filter_by(id=id)
+    log = db.session.scalar(stmt)
+    if log:
+        log.title = log_info.get('title', log.title)
+        db.session.commit()
+        return LogSchema().dump(log), 200
+    else:
+        return {'error' : 'Log not found'}, 404
+    
+# Delete log
+@logs_bp.route("delete/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_log(id):
+    stmt = db.select(Log).filter_by(id=id)
+    log = db.session.scalar(stmt)
+    if log:
+        db.session.delete(log)
+        db.session.commit()
+        return {}, 200
+    else:
+        return {'error' : 'Log not found'}, 404
