@@ -24,15 +24,18 @@ def seed():
     users = [
         User(
             username='Dave',
-            email='dave@test.com'
+            email='dave@test.com',
+            password='1'
         ),
         User(
             username='Gary',
-            email='garr@test.com'
+            email='garr@test.com',
+            password='2'
         ),
         User(
             username='Roy',
-            email='roy@test.com'
+            email='roy@test.com',
+            password='3'
         )
     ]
     db.session.add_all(users)

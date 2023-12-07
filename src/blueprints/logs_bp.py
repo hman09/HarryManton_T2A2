@@ -8,14 +8,18 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 # Set User as a parent route and require a user_id prefix
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
 
-# View your logs
-@logs_bp.route('/')
-@jwt_required()
-def log_view():
+def users_logs():
     user_id = get_jwt_identity()
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
     your_logs = LogSchema(many=True).dump(logs)
     return jsonify(your_logs)
+
+# View your logs
+@logs_bp.route('/')
+@jwt_required()
+def log_view():
+    return users_logs()
+
 
 
 
@@ -76,6 +80,6 @@ def delete_log(id):
     if log:
         db.session.delete(log)
         db.session.commit()
-        return {}, 200
+        return users_logs(), 200
     else:
         return {'error' : 'Log not found'}, 404

@@ -7,10 +7,11 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    email = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(50), nullable=False)
 
 # Use above for marshmallow
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'email', 'username')
+        fields = ('id', 'email', 'username', 'password')
