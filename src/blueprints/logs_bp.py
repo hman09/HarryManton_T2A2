@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from setup import db
 from models.log import Log, LogSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from auth import authorise
 
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
 
@@ -26,7 +27,6 @@ def log_view():
 # @jwt_required()
 def single_user(user_id):
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
-    print(logs)
     if logs:
         users_logs = LogSchema(exclude=['user'], many=True).dump(logs)
         return jsonify(users_logs)
@@ -59,6 +59,7 @@ def update_log(id):
     stmt = db.select(Log).filter_by(id=id)
     log = db.session.scalar(stmt)
     if log:
+        authorise(log.user_id)
         log.title = log_info.get('title', log.title)
         db.session.commit()
         return LogSchema(exclude=['user']).dump(log), 200
@@ -72,6 +73,7 @@ def delete_log(id):
     stmt = db.select(Log).filter_by(id=id)
     log = db.session.scalar(stmt)
     if log:
+        authorise(log.user_id)
         db.session.delete(log)
         db.session.commit()
         return users_logs(), 200
