@@ -10,7 +10,7 @@ users_bp = Blueprint('/', __name__)
 
 users_bp.register_blueprint(logs_bp)
 
-# Home route
+# Home route (login)
 @users_bp.route('/', methods=['POST'])
 def login():
     user_info = UserSchema().load(request.json)
@@ -18,7 +18,7 @@ def login():
     user = db.session.scalar(stmt)
     if user:
         token = create_access_token(identity=user.id)        
-        return {'token': token, 'user': UserSchema().dump(user)}
+        return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
     else:
         return {"error": "Invalid Email or Username"}
 
@@ -29,11 +29,12 @@ def signup():
         user_info = UserSchema().load(request.json)
         user = User(
             email=user_info['email'],
-            username=user_info['username']
+            username=user_info['username'],
+            password=user_info['password']
         )
         db.session.add(user)
         db.session.commit()
-        return UserSchema().dump(user)
+        return UserSchema(exclude=['is_admin']).dump(user)
     except IntegrityError:
         return {'Error' : 'Email or Username already in use.'}
         
@@ -44,6 +45,6 @@ def single_user(id):
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     if user:
-        return UserSchema(exclude=['email']).dump(user)
+        return UserSchema(exclude=['email','password']).dump(user)
     else:
         return {'error' : 'User not found'}, 404

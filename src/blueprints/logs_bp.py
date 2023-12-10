@@ -1,18 +1,16 @@
-# Copy user_bp mods 
 from flask import Blueprint, request, jsonify
 from setup import db
 from models.log import Log, LogSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-# Setup blueprint here and in app.py
-# Set User as a parent route and require a user_id prefix
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
 
+# Function for return all users logs, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
 def users_logs():
     user_id = get_jwt_identity()
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
-    your_logs = LogSchema(many=True).dump(logs)
-    return jsonify(your_logs)
+    their_logs = LogSchema(exclude=['user'], many=True).dump(logs)
+    return jsonify(their_logs)
 
 # View your logs
 @logs_bp.route('/')
@@ -25,16 +23,12 @@ def log_view():
 
 # Get selected users log
 @logs_bp.route('/<int:user_id>')
-# Once working add @jwt_required() to force login
-# Just noticed potential issue since users_bp has a route with just the user_id, will continue to explore results
+# @jwt_required()
 def single_user(user_id):
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
     print(logs)
     if logs:
-        # had issue that mutliple logs were trying to be returned, made it only one log now works
-        # Therefore just need to correct code below to fix
-        # Fixed by using db.session.query so could iterate output
-        users_logs = LogSchema(many=True).dump(logs)
+        users_logs = LogSchema(exclude=['user'], many=True).dump(logs)
         return jsonify(users_logs)
     
     else:
@@ -53,7 +47,7 @@ def create_log():
     )
     db.session.add(log)
     db.session.commit()
-    return LogSchema().dump(log), 201
+    return LogSchema(exclude=['user']).dump(log), 201
 
 # Read already done above
 
@@ -67,7 +61,7 @@ def update_log(id):
     if log:
         log.title = log_info.get('title', log.title)
         db.session.commit()
-        return LogSchema().dump(log), 200
+        return LogSchema(exclude=['user']).dump(log), 200
     else:
         return {'error' : 'Log not found'}, 404
     

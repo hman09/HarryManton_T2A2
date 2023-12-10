@@ -23,19 +23,20 @@ def seed():
     # Make 3 users just need username and email for now
     users = [
         User(
-            username='Dave',
-            email='dave@test.com',
-            password='1'
+            username='Admin',
+            email='admin@test.com',
+            password='admin',
+            is_admin=True
         ),
         User(
             username='Gary',
             email='garr@test.com',
-            password='2'
+            password='gary2'
         ),
         User(
             username='Roy',
             email='roy@test.com',
-            password='3'
+            password='roy3'
         )
     ]
     db.session.add_all(users)
