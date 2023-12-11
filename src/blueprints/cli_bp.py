@@ -4,6 +4,7 @@ from setup import db
 # thought the ma above would import the Schema but need the user model
 from models.user import User
 from models.log import Log
+from models.comment import Comment
 
 # Define Blueprint
 db_initialise = Blueprint('db', __name__)
@@ -71,6 +72,23 @@ def seed():
     ]
     db.session.add_all(logs)
     db.session.commit()
+
+    comments = [
+        Comment(
+            comment = "I love Pizza!",
+            user_id = users[1].id,
+            log_id = logs[5].id
+        ),
+        Comment(
+            comment = "So do I, Try my recipes its Great!",
+            user_id = users[2].id,
+            log_id = logs[5].id
+        ),
+    ]
+    db.session.add_all(comments)
+    db.session.commit()
+
+    
 
     print('Seed successful')
 

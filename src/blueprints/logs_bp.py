@@ -3,8 +3,12 @@ from setup import db
 from models.log import Log, LogSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from auth import authorise
+from blueprints.comments_bp import comments_bp
 
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
+
+logs_bp.register_blueprint(comments_bp)
+
 
 # Function for return all users logs, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
 def users_logs():
@@ -18,9 +22,6 @@ def users_logs():
 @jwt_required()
 def log_view():
     return users_logs()
-
-
-
 
 # Get selected users log
 @logs_bp.route('/<int:user_id>')
