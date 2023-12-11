@@ -16,81 +16,90 @@ from models.comment import Comment, CommentSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from auth import authorise
 
-comments_bp = Blueprint('/', __name__, url_prefix='<int:log_id>/comments')
-
-@comments_bp.route('/', methods=['POST']) 
-#@jwt_required()
-def create_comment():
-    comment_info = CommentSchema().load(request.json)
-    comment = Comment(
-        comment = comment_info['comment'],
-        user_id = get_jwt_identity()
-    )
-    db.session.add(comment)
-    db.session.commit()
-    return CommentSchema(only=['comment']).dump(comment), 201
-
-# # Function for return all users comments, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
-# def users_comments():
-#     user_id = get_jwt_identity()
-#     comments = db.session.query(Comment).filter_by(user_id=user_id).all()
-#     their_comments = CommentSchema(exclude=['user'], many=True).dump(comments)
-#     return jsonify(their_comments)
-
-# # View your comments
-# @comments_bp.route('/')
-# @jwt_required()
-# def comment_view():
-#     return users_comments()
+comments_bp = Blueprint('/', __name__, url_prefix='/comments')
 
 
 
-
-# # Get selected users comment
-# @comments_bp.route('/<int:user_id>')
-# # @jwt_required()
-# def single_user(user_id):
-#     comments = db.session.query(Comment).filter_by(user_id=user_id).all()
-#     if comments:
-#         users_comments = CommentSchema(exclude=['user'], many=True).dump(comments)
-#         return jsonify(users_comments)
+# Function for return all users comments, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
+def your_comments():
+    user_id = get_jwt_identity()
+    comments = db.session.query(Comment).filter_by(user_id=user_id).all()
+    their_comments = CommentSchema(many=True).dump(comments)
+    return jsonify(their_comments)
     
-#     else:
-#         return {'error' : 'User not found'}, 404
+
+# View your comments
+@comments_bp.route('/')
+@jwt_required()
+def my_comments():
+    return your_comments()
+
+# Get logs comments
+@comments_bp.route('<int:log_id>')
+@jwt_required()
+def log_comments(log_id):
+    comments = db.session.query(Comment).filter_by(log_id=log_id).all()
+    log_comments = CommentSchema(many=True).dump(comments)
+    return jsonify(log_comments) # need message incase log has no comments
+
+
+# Get users comments, admin only
+@comments_bp.route('/user<int:user_id>')
+@jwt_required()
+def user_comments(user_id):
+    comments = db.session.query(Comment).filter_by(user_id=user_id).all()
+    if comments:
+        authorise()
+        users_comments = CommentSchema( many=True).dump(comments)
+        return jsonify(users_comments)
+    
+    else:
+        return {'error' : 'User not found'}, 404
+    
+# Get all comments, admin only
 
 #CRUD
 
 # Create comment
+@comments_bp.route('/<int:log_id>', methods=['POST']) 
+@jwt_required()
+def create_comment(log_id):
+    comment_info = CommentSchema().load(request.json)
+    comment = Comment(
+        comment = comment_info['comment'],
+        user_id = get_jwt_identity(),
+        log_id = log_id
+    )
+    db.session.add(comment)
+    db.session.commit()
+    return CommentSchema().dump(comment), 201
 
-#----------------------------------------------------------------
 
-# Read already done above
-
-# # Update comment
-# @comments_bp.route('/edit/<int:id>', methods=['PUT', 'PATCH'])
-# @jwt_required()
-# def update_comment(id):
-#     comment_info = CommentSchema(exclude=['id']).load(request.json)
-#     stmt = db.select(Comment).filter_by(id=id)
-#     comment = db.session.scalar(stmt)
-#     if comment:
-#         authorise(comment.user_id)
-#         comment.title = comment_info.get('title', comment.title)
-#         db.session.commit()
-#         return CommentSchema(exclude=['user']).dump(comment), 200
-#     else:
-#         return {'error' : 'Comment not found'}, 404
+# Update comment
+@comments_bp.route('/edit/<int:id>', methods=['PUT', 'PATCH'])
+@jwt_required()
+def update_comment(id):
+    comment_info = CommentSchema(exclude=['id']).load(request.json)
+    stmt = db.select(Comment).filter_by(id=id)
+    comment = db.session.scalar(stmt)
+    if comment:
+        authorise(comment.user_id)
+        comment.comment = comment_info.get('comment', comment.comment)
+        db.session.commit()
+        return CommentSchema().dump(comment), 200
+    else:
+        return {'error' : 'Comment not found'}, 404
     
-# # Delete comment
-# @comments_bp.route("delete/<int:id>", methods=["DELETE"])
-# @jwt_required()
-# def delete_comment(id):
-#     stmt = db.select(Comment).filter_by(id=id)
-#     comment = db.session.scalar(stmt)
-#     if comment:
-#         authorise(comment.user_id)
-#         db.session.delete(comment)
-#         db.session.commit()
-#         return users_comments(), 200
-#     else:
-#         return {'error' : 'Comment not found'}, 404
+# Delete comment
+@comments_bp.route("delete/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_comment(id):
+    stmt = db.select(Comment).filter_by(id=id)
+    comment = db.session.scalar(stmt)
+    if comment:
+        authorise(comment.user_id)
+        db.session.delete(comment)
+        db.session.commit()
+        return your_comments(), 200
+    else:
+        return {'error' : 'Comment not found'}, 404
