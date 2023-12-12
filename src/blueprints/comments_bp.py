@@ -24,7 +24,8 @@ comments_bp = Blueprint('/', __name__, url_prefix='/comments')
 def your_comments():
     user_id = get_jwt_identity()
     comments = db.session.query(Comment).filter_by(user_id=user_id).all()
-    their_comments = CommentSchema(many=True).dump(comments)
+    their_comments = CommentSchema(exclude=['user','logs','user_id'], many=True).dump(comments)
+    # put a message in if there are no comments
     return jsonify(their_comments)
     
 
@@ -39,7 +40,8 @@ def my_comments():
 @jwt_required()
 def log_comments(log_id):
     comments = db.session.query(Comment).filter_by(log_id=log_id).all()
-    log_comments = CommentSchema(many=True).dump(comments)
+    #log_comments = CommentSchema(only=['comment','user_id'], many=True).dump(comments)
+    log_comments = CommentSchema(exclude=['logs', 'log_id', 'user_id'], many=True).dump(comments)
     return jsonify(log_comments) # need message incase log has no comments
 
 
@@ -50,7 +52,7 @@ def user_comments(user_id):
     comments = db.session.query(Comment).filter_by(user_id=user_id).all()
     if comments:
         authorise()
-        users_comments = CommentSchema( many=True).dump(comments)
+        users_comments = CommentSchema(exclude=['user','logs','user_id'], many=True).dump(comments)
         return jsonify(users_comments)
     
     else:
@@ -66,13 +68,13 @@ def user_comments(user_id):
 def create_comment(log_id):
     comment_info = CommentSchema().load(request.json)
     comment = Comment(
-        comment = comment_info['comment'],
+        message = comment_info['message'],
         user_id = get_jwt_identity(),
         log_id = log_id
     )
     db.session.add(comment)
     db.session.commit()
-    return CommentSchema().dump(comment), 201
+    return CommentSchema(only=['message']).dump(comment), 201
 
 
 # Update comment
@@ -84,9 +86,9 @@ def update_comment(id):
     comment = db.session.scalar(stmt)
     if comment:
         authorise(comment.user_id)
-        comment.comment = comment_info.get('comment', comment.comment)
+        comment.message = comment_info.get('message', comment.message)
         db.session.commit()
-        return CommentSchema().dump(comment), 200
+        return CommentSchema(exclude=['user','logs', 'user_id']).dump(comment), 200
     else:
         return {'error' : 'Comment not found'}, 404
     

@@ -9,16 +9,18 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    comment = db.Column(db.String(250), nullable=False)
+    message = db.Column(db.String(250), nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     log_id = db.Column(db.Integer, db.ForeignKey('logs.id'), nullable=False)
 
-    # logs = db.relationship('Log', back_populates='comment')
+    logs = db.relationship('Log', back_populates='comments')
+    user = db.relationship('User', back_populates='comments')
 
 
 class CommentSchema(ma.Schema):
-    # logs = fields.Nested('LogSchema', exclude=['comment'], many=True)
+    logs = fields.Nested('LogSchema', only=['title'])#, exclude=['comments'], many=True)
+    user = fields.Nested('UserSchema', only=['id', 'username'])
     class Meta:
-        fields = ('id','comment', 'user_id', 'log_id')
+        fields = ('id','message', 'user_id', 'log_id', 'logs', 'user')

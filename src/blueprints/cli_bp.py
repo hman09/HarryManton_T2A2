@@ -75,15 +75,15 @@ def seed():
 
     comments = [
         Comment(
-            comment = "I love Pizza!",
+            message = "I love Pizza!",
             user_id = users[1].id,
-            log_id = logs[5].id
+            log_id = logs[4].id
         ),
         Comment(
-            comment = "So do I, Try my recipes its Great!",
+            message = "So do I, Try my recipes its Great!",
             user_id = users[2].id,
-            log_id = logs[5].id
-        ),
+            log_id = logs[4].id
+        )
     ]
     db.session.add_all(comments)
     db.session.commit()

@@ -11,7 +11,7 @@ logs_bp.register_blueprint(comments_bp)
 
 
 # Function for return all users logs, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
-def users_logs():
+def user_logs():
     user_id = get_jwt_identity()
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
     their_logs = LogSchema(exclude=['user'], many=True).dump(logs)
@@ -21,7 +21,7 @@ def users_logs():
 @logs_bp.route('/')
 @jwt_required()
 def log_view():
-    return users_logs()
+    return user_logs()
 
 # Get selected users log
 @logs_bp.route('/<int:user_id>')
@@ -29,12 +29,23 @@ def log_view():
 def single_user(user_id):
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
     if logs:
-        users_logs = LogSchema(exclude=['user'], many=True).dump(logs)
-        return jsonify(users_logs)
-    
+        users_logs = LogSchema(exclude=['user', 'user_id'], many=True).dump(logs)
+        return jsonify(users_logs)    
     else:
         return {'error' : 'User not found'}, 404
 
+# View targeted log    
+@logs_bp.route('/target/<int:id>')
+#@jwt_required()
+def target_log(id):
+    stmt = db.select(Log).filter_by(id=id)
+    log = db.session.scalar(stmt)
+    if log:
+        return LogSchema(exclude=['user_id']).dump(log)
+    else:
+        return {'error' : 'User not found'}, 404
+
+    
 #CRUD
 
 # Create log
@@ -48,7 +59,7 @@ def create_log():
     )
     db.session.add(log)
     db.session.commit()
-    return LogSchema(exclude=['user']).dump(log), 201
+    return LogSchema(exclude=['user','comments']).dump(log), 201 ###-------------------------------- this may be an error
 
 # Read already done above
 
@@ -77,6 +88,6 @@ def delete_log(id):
         authorise(log.user_id)
         db.session.delete(log)
         db.session.commit()
-        return users_logs(), 200
+        return user_logs(), 200
     else:
         return {'error' : 'Log not found'}, 404

@@ -14,9 +14,11 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean(), default=False)
 
     logs = db.relationship('Log', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user')
 
 # Use above for marshmallow
 class UserSchema(ma.Schema):
     logs = fields.Nested('LogSchema', exclude=['user'], many=True)
+    comments = fields.Nested('CommentSchema')#, exclude=['user'], many=True)
     class Meta:
-        fields = ('id', 'email', 'username', 'password', 'is_admin', 'logs')
+        fields = ('id', 'email', 'username', 'password', 'is_admin', 'logs', 'comments')

@@ -5,6 +5,7 @@ from models.user import User, UserSchema
 from flask_jwt_extended import create_access_token, jwt_required
 from blueprints.logs_bp import logs_bp
 from sqlalchemy.exc import IntegrityError
+from auth import authorise
 
 users_bp = Blueprint('/', __name__) 
 
@@ -42,9 +43,10 @@ def signup():
 @users_bp.route('/<int:id>')
 @jwt_required()
 def single_user(id):
+    authorise()
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     if user:
-        return UserSchema(exclude=['email','password']).dump(user)
+        return UserSchema(exclude=['email','password','comments']).dump(user) #### ------------------- this may be an error
     else:
         return {'error' : 'User not found'}, 404

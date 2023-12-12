@@ -14,9 +14,11 @@ class Log(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', back_populates='logs')
+    comments = db.relationship('Comment', back_populates='logs')
 
 
 class LogSchema(ma.Schema):
-    user = fields.Nested('UserSchema', exclude=['log'], many=True)
+    user = fields.Nested('UserSchema', only=['username', 'id'])
+    comments = fields.Nested('CommentSchema')#, only=['comments'])#, exclude=['log'], many=True)
     class Meta:
-        fields = ('id', 'title', 'user_id', 'user')
+        fields = ('id', 'title', 'user_id', 'user', 'comments')
