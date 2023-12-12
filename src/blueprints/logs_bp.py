@@ -42,7 +42,7 @@ def target_log(id):
     log = db.session.scalar(stmt)
     if log:
         print(log)
-        return LogSchema(only=['comments','user','title']).dump(log)
+        return LogSchema(only=['comments','user','title', 'recipe']).dump(log)
     else:
         return {'error' : 'User not found'}, 404
 
