@@ -20,7 +20,7 @@ class Comment(db.Model):
 
 
 class CommentSchema(ma.Schema):
-    logs = fields.Nested('LogSchema', only=['title'])#, exclude=['comments'], many=True)
+    logs = fields.Nested('LogSchema', only=['title'])
     user = fields.Nested('UserSchema', only=['id', 'username'])
     class Meta:
         fields = ('id','message', 'user_id', 'log_id', 'logs', 'user')

@@ -41,7 +41,8 @@ def target_log(id):
     stmt = db.select(Log).filter_by(id=id)
     log = db.session.scalar(stmt)
     if log:
-        return LogSchema(exclude=['user_id']).dump(log)
+        print(log)
+        return LogSchema(only=['comments','user','title']).dump(log)
     else:
         return {'error' : 'User not found'}, 404
 
@@ -59,7 +60,7 @@ def create_log():
     )
     db.session.add(log)
     db.session.commit()
-    return LogSchema(exclude=['user','comments']).dump(log), 201 ###-------------------------------- this may be an error
+    return LogSchema(exclude=['user','comments']).dump(log), 201
 
 # Read already done above
 

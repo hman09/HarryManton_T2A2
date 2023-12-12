@@ -19,6 +19,6 @@ class User(db.Model):
 # Use above for marshmallow
 class UserSchema(ma.Schema):
     logs = fields.Nested('LogSchema', exclude=['user'], many=True)
-    comments = fields.Nested('CommentSchema')#, exclude=['user'], many=True)
+    comments = fields.Nested('CommentSchema')
     class Meta:
         fields = ('id', 'email', 'username', 'password', 'is_admin', 'logs', 'comments')
