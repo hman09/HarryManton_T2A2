@@ -13,7 +13,7 @@ class Recipe(db.Model):
     water_g = db.Column(db.Integer, nullable=False)
     starter_type = db.Column(db.String(50), default='')
     starter_g = db.Column(db.Integer, default=0)
-    bulk_fermenation_min = db.Column(db.Integer, nullable=False)
+    bulk_fermentation_min = db.Column(db.Integer, nullable=False)
     knead = db.Column(db.String(50), default='')
 
     log_id = db.Column(db.Integer, db.ForeignKey('logs.id'), nullable=False)
@@ -24,4 +24,4 @@ class Recipe(db.Model):
 class RecipeSchema(ma.Schema):
     #logs = fields.Nested('LogSchema', only=['title'])
     class Meta:
-        fields = ('id', 'flour_type', 'flour_g','water_g','starter_type', 'starter_g','bulk_fermentation', 'knead', 'log_id')
+        fields = ('id', 'flour_type', 'flour_g','water_g','starter_type', 'starter_g','bulk_fermentation_min', 'knead', 'log_id')

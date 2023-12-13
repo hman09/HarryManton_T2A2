@@ -4,10 +4,12 @@ from models.log import Log, LogSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from auth import authorise
 from blueprints.comments_bp import comments_bp
+from blueprints.clone_bp import clone_bp
 
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
 
 logs_bp.register_blueprint(comments_bp)
+logs_bp.register_blueprint(clone_bp)
 
 
 # Function for return all users logs, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
@@ -41,10 +43,9 @@ def target_log(id):
     stmt = db.select(Log).filter_by(id=id)
     log = db.session.scalar(stmt)
     if log:
-        print(log)
         return LogSchema(only=['comments','user','title', 'recipe']).dump(log)
     else:
-        return {'error' : 'User not found'}, 404
+        return {'error' : 'Log not found'}, 404
 
     
 #CRUD

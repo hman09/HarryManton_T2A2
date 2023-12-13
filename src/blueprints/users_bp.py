@@ -1,6 +1,6 @@
 # Need similar/identical imports as cli
 from flask import Blueprint, request, jsonify
-from setup import db
+from setup import db, bcrypt
 from models.user import User, UserSchema
 from flask_jwt_extended import create_access_token, jwt_required
 from blueprints.logs_bp import logs_bp
@@ -17,7 +17,7 @@ def login():
     user_info = UserSchema().load(request.json)
     stmt = db.select(User).where(User.email == user_info['email'])
     user = db.session.scalar(stmt)
-    if user:
+    if user and bcrypt.check_password_hash(user.password, user_info['password']):
         token = create_access_token(identity=user.id)        
         return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
     else:

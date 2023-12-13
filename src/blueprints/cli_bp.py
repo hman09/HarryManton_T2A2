@@ -95,7 +95,7 @@ def seed():
             flour_g = 1000,
             water_g = 700,
             starter_type = 'Dry Yeast',
-            bulk_fermenation_min = 1,
+            bulk_fermentation_min = 120,
             knead = 'Mixer',
             log_id = logs[2].id
         )
@@ -106,5 +106,3 @@ def seed():
     
 
     print('Seed successful')
-
-
