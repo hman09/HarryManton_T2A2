@@ -31,19 +31,28 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 ### Development Speed
 - ORM's reduce the boilerplate code needed, enabling developers to accomplish tasks more efficiently. The removal of repeated code  results in quick and efficient production.
 ## End-Point Checklist from ```print(app.url_map) ```
-- [x] <Rule '/' (OPTIONS, POST) -> /.login>,
-- [x] <Rule '/signup' (OPTIONS, POST) -> /.signup>,
-- [x] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>,
-- [ ] <Rule '/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>,
-- [ ] <Rule '/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>,
-- [ ] <Rule '/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>,
-- [ ] <Rule '/logs/' (OPTIONS, POST) -> /./.create_log>,
-- [ ] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>,
-- [ ] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>,
-- [ ] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>,
-- [ ] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>,
-- [ ] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>,
-- [ ] <Rule '/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>,
-- [ ] <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>,
-- [ ] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>,
-- [ ] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>])
+1. [x] <Rule '/' (OPTIONS, POST) -> /.login>
+1. [x] <Rule '/signup' (OPTIONS, POST) -> /.signup>
+1. [x] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>
+1. [x] <Rule '/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>
+1. [x] <Rule '/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>
+1. [x] <Rule '/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>
+1. [x] <Rule '/logs/' (OPTIONS, POST) -> /./.create_log>
+1. [ ] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>
+1. [ ] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>
+1. [ ] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>
+1. [ ] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>
+1. [ ] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>
+1. [ ] <Rule '/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>
+1. [ ] <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>
+1. [ ] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>
+1. [ ] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>
+
+## Check Reveal
+1. Logging should just give you the key, id and your username
+1. View single User should show their comments. 
+1. Creating a user isnt hashing password and return all but password
+1. __No Edit__ Returns your Logs from your JWT
+1. __No Edit__ Returns specified Users Logs 
+1. __No Edit__ Returns specified Log with nested User
+1. Needed to provide recipe as no recipe routes exist

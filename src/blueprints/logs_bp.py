@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify
 from setup import db
 from models.log import Log, LogSchema
+from models.recipe import Recipe, RecipeSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from auth import authorise
 from blueprints.comments_bp import comments_bp
 from blueprints.clone_bp import clone_bp
+
 
 logs_bp = Blueprint('/', __name__, url_prefix='/logs')
 
@@ -61,6 +63,22 @@ def create_log():
     )
     db.session.add(log)
     db.session.commit()
+    print(log_info['recipe'])
+    print(log_info['title'])
+    for original_recipe in log_info['recipe']:
+        log_recipe = Recipe(
+            flour_types=original_recipe.get('flour_types', 'DefaultFlourType'),
+            flour_g=original_recipe.get('flour_g', 0),  
+            water_g=original_recipe.get('water_g', 0),  
+            starter_type=original_recipe.get('starter_type', 'DefaultStarterType'),
+            starter_g=original_recipe.get('starter_g', 0), 
+            bulk_fermentation_min=original_recipe.get('bulk_fermentation_min', 0),
+            knead=original_recipe.get('knead', 'DefaultKnead'),
+            log_id=log.id
+        )
+        db.session.add(log_recipe)
+    db.session.commit()
+
     return LogSchema(exclude=['user','comments']).dump(log), 201
 
 # Read already done above
