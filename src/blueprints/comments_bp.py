@@ -74,7 +74,7 @@ def create_comment(log_id):
     )
     db.session.add(comment)
     db.session.commit()
-    return CommentSchema(only=['message']).dump(comment), 201
+    return CommentSchema(only=['message','id']).dump(comment), 201
 
 
 # Update comment
@@ -88,7 +88,7 @@ def update_comment(id):
         authorise(comment.user_id)
         comment.message = comment_info.get('message', comment.message)
         db.session.commit()
-        return CommentSchema(exclude=['user','logs', 'user_id']).dump(comment), 200
+        return CommentSchema(only=['message']).dump(comment), 200
     else:
         return {'error' : 'Comment not found'}, 404
     

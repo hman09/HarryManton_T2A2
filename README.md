@@ -40,21 +40,30 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1. [x] <Rule '/logs/' (OPTIONS, POST) -> /./.create_log>
 1. [x] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>
 1. [x] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>
-1. [ ] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>
-1. [ ] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>
-1. [ ] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>
-1. [ ] <Rule '/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>
-1. [ ] <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>
-1. [ ] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>
-1. [ ] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>
+1. [x] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>
+1. [x] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>
+1. [x] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>
+1. [x] <Rule '/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>
+1. [x] <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>
+1. [x] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>
+1. [x] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>
 
 ## Check Reveal
 1. Logging should just give you the key, id and your username
-1. View single User should show their comments. 
+1. View single User should show their comments.
 1. Creating a user isnt hashing password and return all but password
-1. __No Edit__ Returns your Logs from your JWT
+1. __No Edit__ Returns your Logs from your JWT identity
 1. __No Edit__ Returns specified Users Logs 
 1. __No Edit__ Returns specified Log with nested User
-1. Needed to provide recipe in create as no recipe routes exist, will need to do the same for edit.
-1. Copy and pasted above into log edit for recipe manipulation. Needed to delete existing recipe before commit to avoid Integrity error from PK.
-1. As above needed to delete nested fields when deleting Log. Also, noticed that when deleting Log as Admin the return is just the Admins Logs, where maybe should return all.
+1. Needed to provide recipe in create as no recipe routes exist, will need to do the same for edit
+1. Copy and pasted above into log edit for recipe manipulation. Needed to delete existing recipe before commit to avoid Integrity error from PK
+1. As above needed to delete nested fields when deleting Log. Also, noticed that when deleting Log as Admin the return is just the Admins Logs, where maybe should return all
+1. __No Edit__ Returns your Comments from your JWT identity
+1. __No Edit__ Returns Comments from a Log and provides a few key user details
+1. __No Edit__ Returns just the specificed Users Comments that contains log_id, the comment_id and the messages from the User
+1. __No Edit__ Creating a comment just returns the comment you created and its id
+1. Changed to Only return the Message that was edited
+1. __No Edit__ However, similar to above Admin can delete any comment, but only get their comments returned.
+1. __No Edit__  Return the log cloned with new PK's
+
+

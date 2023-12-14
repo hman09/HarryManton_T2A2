@@ -35,7 +35,7 @@ def create_clone(id):
             db.session.add(cloned_log_recipe)
         db.session.commit()
 
-        return LogSchema(only=['user', 'title', 'recipe']).dump(cloned_log), 201
+        return LogSchema(only=['title', 'recipe']).dump(cloned_log), 201
     else:
         return {'error' : 'Log not found'}, 404
     
