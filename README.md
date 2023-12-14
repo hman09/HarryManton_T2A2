@@ -1,7 +1,7 @@
 # Harry Manton T2A2 
 
 ## Apps Purpose
-My app is for logging dough recipes. Users can sign up and store their own recipes. gain access to any public recipe, comment on them, like them and clone them for their own record.
+My app is for logging dough recipes. Users can sign up and store their own recipes. gain access to any public recipe, comment on them and clone them for their own record.
 
 ## Reason for Creating
 Everytime I bake bread I log my process in a table, Ive written inside an exersice book. I am currently on my 3rd book and will continue to log my methods every time I make a new batch(now digally though).
@@ -30,3 +30,21 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 - Using an ORM will typically result in consistent and readable code. This benefits collaboration and development, as one or multiple developers can more easily identify and build on features within the app.
 ### Development Speed
 - ORM's reduce the boilerplate code needed, enabling developers to accomplish tasks more efficiently. The removal of repeated code  results in quick and efficient production.
+## End-Point Checklist from ```print(app.url_map) ```
+- [ ] Contact the media 
+- [ ] <Rule '/' (OPTIONS, POST) -> /.login>,
+- [ ] <Rule '/signup' (OPTIONS, POST) -> /.signup>,
+- [ ] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>,
+- [ ] <Rule '/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>,
+- [ ] <Rule '/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>,
+- [ ] <Rule '/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>,
+- [ ] <Rule '/logs/' (OPTIONS, POST) -> /./.create_log>,
+- [ ] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>,
+- [ ] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>,
+- [ ] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>,
+- [ ] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>,
+- [ ] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>,
+- [ ] <Rule '/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>,
+- [ ] <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>,
+- [ ] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>,
+- [ ] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>])
