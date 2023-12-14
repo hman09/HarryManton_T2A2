@@ -23,4 +23,4 @@ class Recipe(db.Model):
 
 class RecipeSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'flour_type', 'flour_g','water_g','starter_type', 'starter_g','bulk_fermentation_min', 'knead', 'log_id')
+        fields = ('id', 'flour_types', 'flour_g','water_g','starter_type', 'starter_g','bulk_fermentation_min', 'knead', 'log_id')

@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from setup import db
 from models.log import Log, LogSchema
-from models.recipe import Recipe, RecipeSchema
+from models.recipe import Recipe
+from models.comment import Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from auth import authorise
 from blueprints.comments_bp import comments_bp
@@ -63,8 +64,6 @@ def create_log():
     )
     db.session.add(log)
     db.session.commit()
-    print(log_info['recipe'])
-    print(log_info['title'])
     for original_recipe in log_info['recipe']:
         log_recipe = Recipe(
             flour_types=original_recipe.get('flour_types', 'DefaultFlourType'),
@@ -76,9 +75,8 @@ def create_log():
             knead=original_recipe.get('knead', 'DefaultKnead'),
             log_id=log.id
         )
-        db.session.add(log_recipe)
+    db.session.add(log_recipe)
     db.session.commit()
-
     return LogSchema(exclude=['user','comments']).dump(log), 201
 
 # Read already done above
@@ -94,6 +92,21 @@ def update_log(id):
         authorise(log.user_id)
         log.title = log_info.get('title', log.title)
         db.session.commit()
+        for original_recipe in log_info['recipe']:
+            log_recipe = Recipe(
+            flour_types=original_recipe.get('flour_types', 'DefaultFlourType'),
+            flour_g=original_recipe.get('flour_g', 0),  
+            water_g=original_recipe.get('water_g', 0),  
+            starter_type=original_recipe.get('starter_type', 'DefaultStarterType'),
+            starter_g=original_recipe.get('starter_g', 0), 
+            bulk_fermentation_min=original_recipe.get('bulk_fermentation_min', 0),
+            knead=original_recipe.get('knead', 'DefaultKnead'),
+            log_id=log.id,
+            id=id 
+        )
+        db.session.query(Recipe).filter_by(log_id=log.id).delete()
+        db.session.add(log_recipe)
+        db.session.commit()
         return LogSchema(exclude=['user']).dump(log), 200
     else:
         return {'error' : 'Log not found'}, 404
@@ -106,6 +119,8 @@ def delete_log(id):
     log = db.session.scalar(stmt)
     if log:
         authorise(log.user_id)
+        db.session.query(Recipe).filter_by(log_id=log.id).delete()
+        db.session.query(Comment).filter_by(log_id=log.id).delete()
         db.session.delete(log)
         db.session.commit()
         return user_logs(), 200

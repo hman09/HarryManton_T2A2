@@ -38,8 +38,8 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1. [x] <Rule '/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>
 1. [x] <Rule '/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>
 1. [x] <Rule '/logs/' (OPTIONS, POST) -> /./.create_log>
-1. [ ] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>
-1. [ ] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>
+1. [x] <Rule '/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>
+1. [x] <Rule '/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>
 1. [ ] <Rule '/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>
 1. [ ] <Rule '/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>
 1. [ ] <Rule '/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>
@@ -55,4 +55,6 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1. __No Edit__ Returns your Logs from your JWT
 1. __No Edit__ Returns specified Users Logs 
 1. __No Edit__ Returns specified Log with nested User
-1. Needed to provide recipe as no recipe routes exist
+1. Needed to provide recipe in create as no recipe routes exist, will need to do the same for edit.
+1. Copy and pasted above into log edit for recipe manipulation. Needed to delete existing recipe before commit to avoid Integrity error from PK.
+1. As above needed to delete nested fields when deleting Log. Also, noticed that when deleting Log as Admin the return is just the Admins Logs, where maybe should return all.
