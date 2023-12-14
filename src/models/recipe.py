@@ -1,8 +1,5 @@
 from setup import db, ma
-from marshmallow import fields
 
-
-# Make basic Recipe class, just PK, Title and FK
 class Recipe(db.Model):
     __tablename__ = 'recipes'
 
@@ -19,7 +16,6 @@ class Recipe(db.Model):
     log_id = db.Column(db.Integer, db.ForeignKey('logs.id'), nullable=False)
 
     logs = db.relationship('Log', back_populates='recipe')
-
 
 class RecipeSchema(ma.Schema):
     class Meta:

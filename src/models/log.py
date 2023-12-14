@@ -1,9 +1,6 @@
-# can copy and paste user model and just ctrl f and replace user with log
 from setup import db, ma
 from marshmallow import fields
 
-
-# Make basic Log class, just PK, Title and FK
 class Log(db.Model):
     __tablename__ = 'logs'
 
@@ -16,7 +13,6 @@ class Log(db.Model):
     user = db.relationship('User', back_populates='logs')
     comments = db.relationship('Comment', back_populates='logs')
     recipe = db.relationship('Recipe', back_populates='logs')
-
 
 class LogSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['username', 'id'])

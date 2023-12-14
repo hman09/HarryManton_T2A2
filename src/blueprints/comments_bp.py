@@ -1,15 +1,3 @@
-# copy paste comments_bp and edit
-# make child of log (register there)
-# ran print(app.url_map) to review current routing path and plan optimal comment route
-# below after from print out
-    #  <Rule '/logs/comments/' (OPTIONS, HEAD, GET) -> /././.comment_view>,
-    #  <Rule '/logs/comments/<user_id>' (OPTIONS, HEAD, GET) -> /././.single_user>,
-    #  <Rule '/logs/comments/' (OPTIONS, POST) -> /././.create_comment>,
-    #  <Rule '/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>,
-    #  <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>])
-# adding log int prefix before 'comment' should create logical flow
-# will comment out all expect CREATE to test
-
 from flask import Blueprint, request, jsonify
 from setup import db
 from models.comment import Comment, CommentSchema
@@ -18,14 +6,11 @@ from auth import authorise
 
 comments_bp = Blueprint('/', __name__, url_prefix='/comments')
 
-
-
-# Function for return all users comments, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
+# Function TBD for change
 def your_comments():
     user_id = get_jwt_identity()
     comments = db.session.query(Comment).filter_by(user_id=user_id).all()
     their_comments = CommentSchema(exclude=['user','logs','user_id'], many=True).dump(comments)
-    # put a message in if there are no comments
     return jsonify(their_comments)
     
 
@@ -40,9 +25,8 @@ def my_comments():
 @jwt_required()
 def log_comments(log_id):
     comments = db.session.query(Comment).filter_by(log_id=log_id).all()
-    #log_comments = CommentSchema(only=['comment','user_id'], many=True).dump(comments)
     log_comments = CommentSchema(exclude=['logs', 'log_id', 'user_id'], many=True).dump(comments)
-    return jsonify(log_comments) # need message incase log has no comments
+    return jsonify(log_comments)
 
 
 # Get users comments, admin only
@@ -57,8 +41,6 @@ def user_comments(user_id):
     
     else:
         return {'error' : 'User not found'}, 404
-    
-# Get all comments, admin only
 
 #CRUD
 

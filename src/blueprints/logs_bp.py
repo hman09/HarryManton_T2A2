@@ -15,7 +15,7 @@ logs_bp.register_blueprint(comments_bp)
 logs_bp.register_blueprint(clone_bp)
 
 
-# Function for return all users logs, include for read and delete. Create and edit will be clearer if only 1 output is resolved. 
+# Function that may change to return all if Admin TBD
 def user_logs():
     user_id = get_jwt_identity()
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
@@ -30,7 +30,7 @@ def log_view():
 
 # Get selected users log
 @logs_bp.route('/<int:user_id>')
-# @jwt_required()
+@jwt_required()
 def single_user(user_id):
     logs = db.session.query(Log).filter_by(user_id=user_id).all()
     if logs:
@@ -41,7 +41,7 @@ def single_user(user_id):
 
 # View targeted log    
 @logs_bp.route('/target/<int:id>')
-#@jwt_required()
+@jwt_required()
 def target_log(id):
     stmt = db.select(Log).filter_by(id=id)
     log = db.session.scalar(stmt)

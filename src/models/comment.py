@@ -1,8 +1,5 @@
-# copy and paste comment and alter (should have used logs for the FK)
-# comment out back-populates for future use
 from setup import db, ma
 from marshmallow import fields
-
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -17,7 +14,6 @@ class Comment(db.Model):
 
     logs = db.relationship('Log', back_populates='comments')
     user = db.relationship('User', back_populates='comments')
-
 
 class CommentSchema(ma.Schema):
     logs = fields.Nested('LogSchema', only=['title'])

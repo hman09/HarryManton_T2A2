@@ -1,5 +1,4 @@
-# Need similar/identical imports as cli
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from setup import db, bcrypt
 from models.user import User, UserSchema
 from flask_jwt_extended import create_access_token, jwt_required

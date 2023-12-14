@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint
 from setup import db
 from models.log import Log, LogSchema
 from models.recipe import Recipe

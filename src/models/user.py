@@ -1,8 +1,6 @@
-# Import db and schema
 from setup import db, ma
 from marshmallow import fields
 
-# Make basic User class, just PK, email and username for now
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -16,7 +14,6 @@ class User(db.Model):
     logs = db.relationship('Log', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
 
-# Use above for marshmallow
 class UserSchema(ma.Schema):
     logs = fields.Nested('LogSchema', exclude=['user'], many=True)
     comments = fields.Nested('CommentSchema', only=['message'], many=True)

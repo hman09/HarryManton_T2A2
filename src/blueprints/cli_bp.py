@@ -1,19 +1,14 @@
-# Import blueprint and db for first create and seed
 from flask import Blueprint
 from setup import db, bcrypt
-# thought the ma above would import the Schema but need the user model
 from models.user import User
 from models.log import Log
 from models.comment import Comment
 from models.recipe import Recipe
 
-# Define Blueprint
 db_initialise = Blueprint('db', __name__)
 
-# Create database
 @db_initialise.cli.command('create')
 def create():
-    # use drop then create to reset db. add print "DB reset" to test command
     db.drop_all()
     db.create_all()
     print('DB reset')
@@ -21,8 +16,6 @@ def create():
 # Seed database
 @db_initialise.cli.command('seed')
 def seed():
-    # Will need to make Schema for User to insert -- DONE
-    # Make 3 users just need username and email for now
     users = [
         User(
             username='Admin',
@@ -44,7 +37,6 @@ def seed():
     db.session.add_all(users)
     db.session.commit()
 
-    # Seeding 6 Logs 2 for each user
     logs = [
         Log(
             title="Wholemeal",
@@ -149,9 +141,7 @@ def seed():
         )
     ]
     db.session.add_all(recipe)
-    db.session.commit()
-
-    
+    db.session.commit()    
 
     print('Seed successful')
 
