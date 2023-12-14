@@ -50,26 +50,26 @@ def seed():
             title="Wholemeal",
             user_id = users[0].id
         ),
-        # Log(
-        #     title="White",
-        #     user_id = users[0].id  
-        # ),
+        Log(
+            title="White",
+            user_id = users[0].id  
+        ),
         Log(
             title="Baguette",
             user_id = users[1].id
         ),
-        # Log(
-        #     title="Sourdough",
-        #     user_id = users[1].id
-        # ),
+        Log(
+            title="Sourdough",
+            user_id = users[1].id
+        ),
         Log(
             title="Pizza",
             user_id = users[2].id
+        ),
+        Log(
+            title="Brioche",
+            user_id = users[2].id
         )
-        # Log(
-        #     title="Brioche",
-        #     user_id = users[2].id
-        # )
     ]
     db.session.add_all(logs)
     db.session.commit()
@@ -78,12 +78,12 @@ def seed():
         Comment(
             message = "I love Pizza!",
             user_id = users[1].id,
-            log_id = logs[2].id
+            log_id = logs[4].id
         ),
         Comment(
             message = "So do I, Try my recipes its Great!",
             user_id = users[2].id,
-            log_id = logs[2].id
+            log_id = logs[4].id
         )
     ]
     db.session.add_all(comments)

@@ -19,7 +19,7 @@ def login():
     user = db.session.scalar(stmt)
     if user and bcrypt.check_password_hash(user.password, user_info['password']):
         token = create_access_token(identity=user.id)        
-        return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
+        return {'token': token, 'user': UserSchema(exclude=['password', 'comments']).dump(user)}
     else:
         return {"error": "Invalid Email or Username"}
 
@@ -35,7 +35,7 @@ def signup():
         )
         db.session.add(user)
         db.session.commit()
-        return UserSchema(exclude=['is_admin']).dump(user)
+        return UserSchema(exclude=['is_admin','logs','comments']).dump(user)
     except IntegrityError:
         return {'Error' : 'Email or Username already in use.'}
         
@@ -47,6 +47,6 @@ def single_user(id):
     stmt = db.select(User).filter_by(id=id)
     user = db.session.scalar(stmt)
     if user:
-        return UserSchema(exclude=['email','password','comments']).dump(user)
+        return UserSchema(exclude=['email','password']).dump(user)
     else:
         return {'error' : 'User not found'}, 404

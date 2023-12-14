@@ -22,6 +22,5 @@ class Recipe(db.Model):
 
 
 class RecipeSchema(ma.Schema):
-    #logs = fields.Nested('LogSchema', only=['title'])
     class Meta:
         fields = ('id', 'flour_type', 'flour_g','water_g','starter_type', 'starter_g','bulk_fermentation_min', 'knead', 'log_id')

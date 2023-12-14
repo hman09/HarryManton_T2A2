@@ -31,10 +31,9 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 ### Development Speed
 - ORM's reduce the boilerplate code needed, enabling developers to accomplish tasks more efficiently. The removal of repeated code  results in quick and efficient production.
 ## End-Point Checklist from ```print(app.url_map) ```
-- [ ] Contact the media 
-- [ ] <Rule '/' (OPTIONS, POST) -> /.login>,
-- [ ] <Rule '/signup' (OPTIONS, POST) -> /.signup>,
-- [ ] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>,
+- [x] <Rule '/' (OPTIONS, POST) -> /.login>,
+- [x] <Rule '/signup' (OPTIONS, POST) -> /.signup>,
+- [x] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>,
 - [ ] <Rule '/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>,
 - [ ] <Rule '/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>,
 - [ ] <Rule '/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>,
