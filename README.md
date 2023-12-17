@@ -70,42 +70,42 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 
 ### End-Point Sample
 
-1. *'/' (OPTIONS, POST) -> /.login>* A user will POST with an email and the associated password. The API will validate and return a JWT token. 
+1.  *'/' (OPTIONS, POST) -> /.login>* A user will POST with an email and the associated password. The API will validate and return a JWT token. 
 <img src="/docs/Route _Screenshot_1.png" alt="End-point 1">
 
-1. *'/signup' (OPTIONS, POST) -> /.signup>* A user can sign up by entering a email and username and password. The username and password my be unique in the DB.
+1.  *'/signup' (OPTIONS, POST) -> /.signup>* A user can sign up by entering a email and username and password. The username and password my be unique in the DB.
 <img src="/docs/Route_Screenshot_2.png" alt="End-point 2">
 
-1. *'/<id>' (GET, HEAD, OPTIONS) -> /.single_user>* A signed in user search for a single user. returns a list of users logs with nested recipes and comments.
+1.  *'/<id>' (GET, HEAD, OPTIONS) -> /.single_user>* A signed in user search for a single user. returns a list of users logs with nested recipes and comments.
 <img src="/docs/Route_Screenshot_3.png" alt="End-point 3">
 
-1. *'/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>* Uses your JWT token to return your logs.
+1.  *'/logs/' (GET, HEAD, OPTIONS) -> /./.log_view>* Uses your JWT token to return your logs.
 <img src="/docs/Route_Screenshot_4.png" alt="End-point 4">
 
-1. *'/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>* Targets a single users logs.
+1.  *'/logs/<user_id>' (GET, HEAD, OPTIONS) -> /./.single_user>* Targets a single users logs.
 <img src="/docs/Route_Screenshot_5.png" alt="End-point 5">
 
-1. *'/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>* Targets a single log.
+1.  *'/logs/target/<id>' (GET, HEAD, OPTIONS) -> /./.target_log>* Targets a single log.
 <img src="/docs/Route_Screenshot_6.png" alt="End-point 6">
 
-1. *'/logs/' (OPTIONS, POST) -> /./.create_log>* A logged in users makes a new log. POST requires a Title, users can also input the recipe here, or later while editing (if no recipe entered defualts are provided).
+1.  *'/logs/' (OPTIONS, POST) -> /./.create_log>* A logged in users makes a new log. POST requires a Title, users can also input the recipe here, or later while editing (if no recipe entered defualts are provided).
 <img src="/docs/Route_Screenshot_7.png" alt="End-point 7">
 
-1. *'/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>* A user can edit their logs (or admin any log). <img src="/docs/Route_Screenshot_8.png" alt="End-point 8">
+1.  *'/logs/edit/<id>' (PUT, OPTIONS, PATCH) -> /./.update_log>* A user can edit their logs (or admin any log). <img src="/docs/Route_Screenshot_8.png" alt="End-point 8">
 
-1. *'/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>* A user can delete their log, it will return remaining logs. <img src="/docs/Route_Screenshot_9.png" alt="End-point 9">
+1.  *'/logs/delete/<id>' (OPTIONS, DELETE) -> /./.delete_log>* A user can delete their log, it will return remaining logs. <img src="/docs/Route_Screenshot_9.png" alt="End-point 9">
 
-1. *'/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>* Uses the JWT token to give a user their comments. <img src="/docs/Route_Screenshot_10.png" alt="End-point 10">
+1.  *'/logs/comments/' (GET, HEAD, OPTIONS) -> /././.my_comments>* Uses the JWT token to give a user their comments. <img src="/docs/Route_Screenshot_10.png" alt="End-point 10">
 
-1. *'/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>* Targets a specific log and returns comment on it. <img src="/docs/Route_Screenshot_11.png" alt="End-point 11">
+1.  *'/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>* Targets a specific log and returns comment on it. <img src="/docs/Route_Screenshot_11.png" alt="End-point 11">
 
-1. *'/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>* Returns target users comments. <img src="//docs/Route_Screenshot_12.png" alt="End-point 12">
+1.  *'/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>* Returns target users comments. <img src="//docs/Route_Screenshot_12.png" alt="End-point 12">
 
-1. *'/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>* Creates a comment, only requires the message to be input as route directs which log. <img src="/docs/Route_Screenshot_13.png" alt="End-point 13">
+1.  *'/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>* Creates a comment, only requires the message to be input as route directs which log. <img src="/docs/Route_Screenshot_13.png" alt="End-point 13">
 
-1. *'/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>* Edits the message on a comment. <img src="/docs/Route_Screenshot_14.png" alt="End-point 14">
+1.  *'/logs/comments/edit/<id>' (PUT, OPTIONS, PATCH) -> /././.update_comment>* Edits the message on a comment. <img src="/docs/Route_Screenshot_14.png" alt="End-point 14">
 
-1. *'/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>* Delete target comment. <img src="/docs/Route_Screenshot_15.png" alt="End-point 15">
+1.  *'/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>* Delete target comment. <img src="/docs/Route_Screenshot_15.png" alt="End-point 15">
 
-1. *'/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>* Clones Target Log and nested recipe. not comments. <img src="/docs/Route_Screenshot_16.png" alt="End-point 16">
+1.  *'/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>* Clones Target Log and nested recipe. not comments. <img src="/docs/Route_Screenshot_16.png" alt="End-point 16">
 
