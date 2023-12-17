@@ -16,9 +16,6 @@ Below is a picture of one of my phyical entries.
 ## Why Postgres
 I have chosen Postgres because I have the most experienced with it and I prioritise developing my app above learning a different Database Management System (DBMS).
 
-## Why Consider Alternative Database Systems
- What are the drawbacks compared to others?
-
 ## ORM - Functionalities and Benefits
 Object Relation Mapping(ORM) provides interaction between applications and databases. I will be using SQLAlchemy as my ORM and it will allows me to code my app in python and utilise a flask architype.
 
@@ -110,4 +107,55 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1.  *'/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>* Clones Target Log and nested recipe. not comments. <img src="/docs/Route_Screenshot_16.png" alt="End-point 16">
 
 ## ERD
-<img src="/docs/T2A2_ERD.drawio.pdf" alt="ERD">
+<img src="/docs/T2A2_ERD.drawio.pdf" alt="ERD PDF">
+
+<img src="/docs/ERD.png" alt="ERD screenshot">
+
+## External Packages\
+### Flask==3.0.0
+- Provides the architype for the application.
+### Flask-Bcrypt==1.0.1
+- Encrypts passwords for secure storage in my application.
+### Flask-JWT-Extended==4.5.3
+- Enables JWT tokens for authenticated users and authorising them.
+### flask-marshmallow==0.15.0
+- Allows for serialisation and deserialisation in the application.
+### Flask-SQLAlchemy==3.1.1
+- SQL Alchemy allow for ORM in python.
+### python-dotenv==1.0.0
+- Supports loading environment variables from a file into Python applications.
+
+## Model Relationships
+
+My app has "comment, log, recipe and user" models.
+The models relationship is one that cascades down as seen below (excluding Recipe which is souly attached to log).
+
+### User > Log > Comment
+
+- __Comment__ has their users id and the log they are messaging on.
+
+- __Log__ have 0 or many comments nested inside which references the comment_id, username and user_id of the commentee
+
+- __user__ Has all the attributes and will display them on relvant routes. 
+
+- __recipe__ 1 and only 1 must exist on each log, they are nested in every instance of log.
+
+## Project Management
+
+I have managed this project with a Agile methodology in mind. I havent used timed sprints, but have setup a Kanban boards into stages. Each stage I have minimal goals that will build my app incrementally. 
+
+My stages start with a plan and review where I organise the goals into a hierachy and group aspects that should be done together by colour coding tags.
+
+To Do is my next stage which I have sorted and move items into Doing from the top down.
+
+Doing only has 1 (or 1 group) goal to complete ensuring I have a focused task to complete, If creative ideas pop up, I put them into the Move to Next Stage table and continue to focus on my current goal.
+
+Code review is a quick table where once I finished a coding code in Doing I would quickly skim my code for and psuedo that shouldnt be there, spelling needing changed or potential improvments I should add to the Next Stage. 
+
+Code Testing gathered all my coding goals from the stage and once all the coding of that stage was done, I would run test to review functioning of app.
+
+My last 2 tables were Next stage and Dropped Idea to help plan how my next stages.
+
+My last card in Every Stage was to do a Stage review, where I reviewed the workings of the stage I have just done (PDF Below).
+
+[Harry Manton Stage Overview](/docs/HarryManton_T2A2_StageOverview.pdf)
