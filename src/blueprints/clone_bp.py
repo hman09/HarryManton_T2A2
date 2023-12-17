@@ -38,32 +38,3 @@ def create_clone(id):
         return LogSchema(only=['title', 'recipe']).dump(cloned_log), 201
     else:
         return {'error' : 'Log not found'}, 404
-    
-# @clone_bp.route('/get<int:id>') 
-# @jwt_required()
-# def clone(id):
-#     log = Log.query.get(id)
-#     if log:
-#         cloned_log = Log(
-#             title=log.title,
-#             user_id=get_jwt_identity()
-#         )
-#         db.session.add(cloned_log)
-#         db.session.commit()
-
-#         for original_recipe in log.recipe:
-#             cloned_log_recipe = Recipe(
-#                 log_id=log.id
-#             )
-            
-#             for field in original_recipe.__table__.columns:
-#                 field_name = field.name
-#                 if field_name != ('id' or 'log_id') and hasattr(cloned_log_recipe, field_name):
-#                     setattr(cloned_log_recipe, field_name, getattr(original_recipe, field_name))
-            
-#             db.session.add(cloned_log_recipe)
-#         db.session.commit()
-        
-#         return LogSchema(only=['user', 'title', 'recipe']).dump(cloned_log), 201
-#     else:
-#         return {'error': 'Log not found'}, 404

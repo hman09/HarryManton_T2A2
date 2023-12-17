@@ -1,7 +1,7 @@
 from flask import Blueprint
 from setup import db, bcrypt
 from models.user import User
-from models.log import Log
+from models.log import Log, LogSchema
 from models.comment import Comment
 from models.recipe import Recipe
 
@@ -144,4 +144,3 @@ def seed():
     db.session.commit()    
 
     print('Seed successful')
-

@@ -17,20 +17,22 @@ Below is a picture of one of my phyical entries.
 I have chosen Postgres because I have the most experienced with it and I prioritise developing my app above learning a different Database Management System (DBMS).
 
 ## Why Consider Alternative Database Systems
-
  What are the drawbacks compared to others?
 
 ## ORM - Functionalities and Benefits
-
 Object Relation Mapping(ORM) provides interaction between applications and databases. I will be using SQLAlchemy as my ORM and it will allows me to code my app in python and utilise a flask architype.
 
 ### Language Flexibility
 - ORM's allow developers to interact with the database using their preferrend programming language. This flexibility lets developers leverage their abilities while abstracting away direct SQL queries.
+
 ### Code Readability
 - Using an ORM will typically result in consistent and readable code. This benefits collaboration and development, as one or multiple developers can more easily identify and build on features within the app.
+
 ### Development Speed
 - ORM's reduce the boilerplate code needed, enabling developers to accomplish tasks more efficiently. The removal of repeated code  results in quick and efficient production.
-## End-Point Checklist from ```print(app.url_map) ```
+
+## End-Points
+### End-Point Checklist from ```print(app.url_map) ```
 1. [x] <Rule '/' (OPTIONS, POST) -> /.login>
 1. [x] <Rule '/signup' (OPTIONS, POST) -> /.signup>
 1. [x] <Rule '/<id>' (GET, HEAD, OPTIONS) -> /.single_user>
@@ -48,7 +50,7 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1. [x] <Rule '/logs/comments/delete/<id>' (OPTIONS, DELETE) -> /././.delete_comment>
 1. [x] <Rule '/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>
 
-## Check Reveal
+### Checklist Review
 1. Logging should just give you the key, id and your username
 1. View single User should show their comments.
 1. Creating a user isnt hashing password and return all but password
@@ -66,4 +68,22 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 1. __No Edit__ However, similar to above Admin can delete any comment, but only get their comments returned.
 1. __No Edit__  Return the log cloned with new PK's
 
+### End-Point Sample
 
+1. <img src="/docs/Route _Screenshot_1.png" alt="Alt text">
+
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
+1.
