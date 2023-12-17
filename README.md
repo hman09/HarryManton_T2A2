@@ -96,7 +96,7 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 
 1.  *'/logs/comments/<log_id>' (GET, HEAD, OPTIONS) -> /././.log_comments>* Targets a specific log and returns comment on it. <img src="/docs/Route_Screenshot_11.png" alt="End-point 11">
 
-1.  *'/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>* Returns target users comments. <img src="//docs/Route_Screenshot_12.png" alt="End-point 12">
+1.  *'/logs/comments/user<user_id>' (GET, HEAD, OPTIONS) -> /././.user_comments>* Returns target users comments. <img src="/docs/Route_Screenshot_12.png" alt="End-point 12">
 
 1.  *'/logs/comments/<log_id>' (OPTIONS, POST) -> /././.create_comment>* Creates a comment, only requires the message to be input as route directs which log. <img src="/docs/Route_Screenshot_13.png" alt="End-point 13">
 
