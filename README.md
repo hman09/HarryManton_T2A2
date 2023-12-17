@@ -142,7 +142,7 @@ The models relationship is one that cascades down as seen below (excluding Recip
 
 ## Project Management
 
-I have managed this project with a Agile methodology in mind. I havent used timed sprints, but have setup a Kanban boards into stages. Each stage I have minimal goals that will build my app incrementally. 
+I have managed this project with a Agile methodology in mind. I havent used timed sprints, but have setup a Kanban boards into stages. Each stage I have minimal goals that will build my app incrementally. (Trello Link at the bottom)
 
 My stages start with a plan and review where I organise the goals into a hierachy and group aspects that should be done together by colour coding tags.
 
@@ -159,3 +159,6 @@ My last 2 tables were Next stage and Dropped Idea to help plan how my next stage
 My last card in Every Stage was to do a Stage review, where I reviewed the workings of the stage I have just done (PDF Below).
 
 [Harry Manton Stage Overview](/docs/HarryManton_T2A2_StageOverview.pdf)
+
+[Harry Manton Trello](https://trello.com/w/harry_manton_t2a2)
+
