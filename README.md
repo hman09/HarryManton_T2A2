@@ -109,3 +109,5 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 
 1.  *'/logs/clone/<id>' (GET, HEAD, OPTIONS) -> /././clone.create_clone>* Clones Target Log and nested recipe. not comments. <img src="/docs/Route_Screenshot_16.png" alt="End-point 16">
 
+## ERD
+<img src="/docs/T2A2_ERD.drawio.pdf" alt="ERD">
