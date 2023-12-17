@@ -75,6 +75,7 @@ Object Relation Mapping(ORM) provides interaction between applications and datab
 
 1. *'/signup' (OPTIONS, POST) -> /.signup>* A user can sign up by entering a email and username and password. The username and password my be unique in the DB.
 <img src="/docs/Route _Screenshot_2.png" alt="End-point 2">
+<img src="/docs/Route_Screenshot_2.png>" alt="End-point 2">
 
 1. *'/<id>' (GET, HEAD, OPTIONS) -> /.single_user>* A signed in user search for a single user. returns a list of users logs with nested recipes and comments.
 <img src="/docs/Route _Screenshot_3.png" alt="End-point 3">
